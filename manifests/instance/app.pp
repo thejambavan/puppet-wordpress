@@ -41,7 +41,7 @@ define wordpress::instance::app (
     fail('wordpress class requires `wp_debug` parameter to be true, when `wp_debug_display` is true')
   }
 
-  if ($wp_proxy_host) {
+  if $wp_proxy_host and !empty($wp_proxy_host) {
     $exec_environment = [
       "http_proxy=http://${wp_proxy_host}:${wp_proxy_port}",
       "https_proxy=http://${wp_proxy_host}:${wp_proxy_port}",
@@ -72,7 +72,7 @@ define wordpress::instance::app (
   }
 
   ## tar.gz. file name lang-aware
-  if $wp_lang {
+  if $wp_lang and !empty($wp_lang) {
     $install_file_name = "wordpress-${version}-${wp_lang}.tar.gz"
   } else {
     $install_file_name = "wordpress-${version}.tar.gz"
