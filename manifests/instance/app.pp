@@ -41,6 +41,13 @@ define wordpress::instance::app (
     fail('wordpress class requires `wp_debug` parameter to be true, when `wp_debug_display` is true')
   }
 
+  if ($wp_proxy_host) {
+    $exec_environment = [
+      "http_proxy=http://${wp_proxy_host}:${wp_proxy_port}",
+      "https_proxy=http://${wp_proxy_host}:${wp_proxy_port}",
+    ]
+  }
+
   ## Resource defaults
   File {
     owner  => $wp_owner,
@@ -48,9 +55,10 @@ define wordpress::instance::app (
     mode   => '0644',
   }
   Exec {
-    path      => ['/bin','/sbin','/usr/bin','/usr/sbin'],
-    cwd       => $install_dir,
-    logoutput => 'on_failure',
+    path        => ['/bin','/sbin','/usr/bin','/usr/sbin'],
+    cwd         => $install_dir,
+    environment => $exec_environment,
+    logoutput   => 'on_failure',
   }
 
   ## Installation directory
