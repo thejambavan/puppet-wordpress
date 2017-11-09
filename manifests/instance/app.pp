@@ -62,13 +62,9 @@ define wordpress::instance::app (
   } else {
     notice("Warning: cannot manage the permissions of ${install_dir}, as another resource (perhaps apache::vhost?) is managing it.")
   }
-  
+
   ## tar.gz. file name lang-aware
-  if $wp_lang {
-    $install_file_name = "wordpress-${version}-${wp_lang}.tar.gz"
-  } else {
-    $install_file_name = "wordpress-${version}.tar.gz"
-  }
+  $install_file_name = "wordpress-${version}.tar.gz"
 
   ## Download and extract
   exec { "Download wordpress ${install_url}/wordpress-${version}.tar.gz to ${install_dir}":
