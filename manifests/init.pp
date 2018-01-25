@@ -35,8 +35,8 @@
 #   Specifies the database user's password in plaintext. Default: password
 #
 # [*wp_owner*]
-#   Specifies the owner of the wordpress files. You must ensure this user 
-#   exists as this module does not attempt to create it if missing.  Default: 
+#   Specifies the owner of the wordpress files. You must ensure this user
+#   exists as this module does not attempt to create it if missing.  Default:
 #   root
 #
 # [*wp_group*]
@@ -61,6 +61,9 @@
 #
 # [*wp_proxy_port*]
 #   Specifies the port to use with the proxy host.  Default: ''
+#
+# [*wp_site_url*]
+#  If your WordPress server is behind a proxy, you might need to set the WP_SITEURL with this parameter.  Default: `undef`
 #
 # [*wp_multisite*]
 #   Specifies whether to enable the multisite feature. Requires `wp_site_domain` to also be passed. Default: `false`
@@ -100,6 +103,7 @@ class wordpress (
   $wp_table_prefix      = 'wp_',
   $wp_proxy_host        = '',
   $wp_proxy_port        = '',
+  $wp_site_url          = undef,
   $wp_multisite         = false,
   $wp_site_domain       = '',
   $wp_debug             = false,
@@ -125,6 +129,7 @@ class wordpress (
     wp_table_prefix      => $wp_table_prefix,
     wp_proxy_host        => $wp_proxy_host,
     wp_proxy_port        => $wp_proxy_port,
+    wp_site_url          => $wp_site_url,
     wp_multisite         => $wp_multisite,
     wp_site_domain       => $wp_site_domain,
     wp_debug             => $wp_debug,

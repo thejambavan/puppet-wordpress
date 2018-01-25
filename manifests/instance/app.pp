@@ -15,6 +15,7 @@ define wordpress::instance::app (
   $wp_table_prefix,
   $wp_proxy_host,
   $wp_proxy_port,
+  $wp_site_url,
   $wp_multisite,
   $wp_site_domain,
   $wp_debug,
@@ -62,7 +63,7 @@ define wordpress::instance::app (
   } else {
     notice("Warning: cannot manage the permissions of ${install_dir}, as another resource (perhaps apache::vhost?) is managing it.")
   }
-  
+
   ## tar.gz. file name lang-aware
   if $wp_lang {
     $install_file_name = "wordpress-${version}-${wp_lang}.tar.gz"
@@ -129,6 +130,7 @@ define wordpress::instance::app (
     # - $wp_plugin_dir
     # - $wp_proxy_host
     # - $wp_proxy_port
+    # - $wp_site_url
     # - $wp_multisite
     # - $wp_site_domain
     # - $wp_additional_config
