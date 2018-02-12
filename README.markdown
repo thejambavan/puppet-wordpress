@@ -77,6 +77,9 @@ This will set up one or more installations of Wordpress 3.8 on Debian and Redhat
 * `wp_proxy_port`<br />
   Specifies the port to use with the proxy host.  Default: ''
 
+* `wp_site_url`<br />
+  If your WordPress server is behind a proxy, you might need to set the WP_SITEURL with this parameter.  Default: 'undef'
+
 * `wp_multisite`<br />
   Specifies whether to enable the multisite feature. Requires `wp_site_domain` to also be passed. Default: `false`
 
