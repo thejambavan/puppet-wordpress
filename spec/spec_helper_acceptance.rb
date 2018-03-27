@@ -11,4 +11,8 @@ install_module_dependencies_on(hosts)
 RSpec.configure do |c|
   # Readable test descriptions
   c.formatter = :documentation
+
+  c.before :suite do
+    on hosts, puppet('module', 'install', 'puppetlabs/apache')
+  end
 end
