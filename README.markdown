@@ -65,6 +65,15 @@ This will set up one or more installations of Wordpress 4.8.1 on Debian and Redh
 * `wp_config_mode`<br />
   Specifies the file permissions of wp-config.php. Default: `0640`
 
+* `wp_content_owner`<br />
+  Specifies the owner of the wordpress wp-content files. Default: root
+
+* `wp_content_group`<br />
+  Specifies the group of the wordpress wp-content files. Default: 0 (*BSD/Darwin compatible GID)
+
+* `wp_content_recurse`<br />
+  Specifies whether to recursively manage the permissions on wp-content. Default: `true`
+
 * `wp_lang`<br />
   WordPress Localized Language. Default: ''
 
