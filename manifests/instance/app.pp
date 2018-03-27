@@ -45,6 +45,13 @@ define wordpress::instance::app (
     fail('wordpress class requires `wp_debug` parameter to be true, when `wp_debug_display` is true')
   }
 
+  if $wp_proxy_host and !empty($wp_proxy_host) {
+    $exec_environment = [
+      "http_proxy=http://${wp_proxy_host}:${wp_proxy_port}",
+      "https_proxy=http://${wp_proxy_host}:${wp_proxy_port}",
+    ]
+  }
+
   ## Resource defaults
   File {
     owner  => $wp_owner,
@@ -52,9 +59,10 @@ define wordpress::instance::app (
     mode   => '0644',
   }
   Exec {
-    path      => ['/bin','/sbin','/usr/bin','/usr/sbin'],
-    cwd       => $install_dir,
-    logoutput => 'on_failure',
+    path        => ['/bin','/sbin','/usr/bin','/usr/sbin'],
+    cwd         => $install_dir,
+    environment => $exec_environment,
+    logoutput   => 'on_failure',
   }
 
   ## Installation directory
@@ -68,7 +76,7 @@ define wordpress::instance::app (
   }
 
   ## tar.gz. file name lang-aware
-  if $wp_lang and $wp_lang != '' {
+  if $wp_lang and !empty($wp_lang) {
     $install_file_name = "wordpress-${version}-${wp_lang}.tar.gz"
   } else {
     $install_file_name = "wordpress-${version}.tar.gz"
@@ -76,7 +84,7 @@ define wordpress::instance::app (
 
   ## Download and extract
   exec { "Download wordpress ${install_url}/wordpress-${version}.tar.gz to ${install_dir}":
-    command => "wget ${install_url}/${install_file_name}",
+    command => "curl -L -O ${install_url}/${install_file_name}",
     creates => "${install_dir}/${install_file_name}",
     require => File[$install_dir],
     user    => $wp_owner,
