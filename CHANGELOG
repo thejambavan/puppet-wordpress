@@ -1,8 +1,3 @@
-2017-08-22 Release 1.0.1
-Features:
-- Update default version of wordpress to install to 4.8.1
-- Set default transfer protocol to HTTPS
-
 2014-10-15 Release 1.0.0
 Features
 - Multiple instances ability via wordpress::instance
