@@ -42,12 +42,12 @@
 #   compatible GID)
 #
 # [*wp_config_owner*]
-#   Specifies the other of the wordpress wp-config.php.  You must ensure this user
-#   exists as this module does not attempt to create it if missing.  Default: root
+#   Specifies the other of the wordpress wp-config.php.  You must ensure this
+#   user exists as this module does not attempt to create it if missing.
+#   Default: $wp_owner value.
 #
 # [*wp_config_group*]
-#   Specifies the group of the wordpress wp-config.php. Default: 0 (*BSD/Darwin
-#   compatible GID)
+#   Specifies the group of the wordpress wp-config.php. Default: $pw_group value.
 #
 # [*wp_config_mode*]
 #   Specifies the file permissions of wp-config.php. Default: 0640
@@ -93,8 +93,8 @@ define wordpress::instance (
   $db_password          = 'password',
   $wp_owner             = 'root',
   $wp_group             = '0',
-  $wp_config_owner      = 'root',
-  $wp_config_group      = '0',
+  $wp_config_owner      = undef,
+  $wp_config_group      = undef,
   $wp_config_mode       = '0640',
   $wp_lang              = '',
   $wp_config_content    = undef,
@@ -109,6 +109,8 @@ define wordpress::instance (
   $wp_debug_log         = false,
   $wp_debug_display     = false,
 ) {
+  $_wp_config_owner = pick($wp_config_owner, $wp_owner)
+  $_wp_config_group = pick($wp_config_group, $wp_group)
   wordpress::instance::app { $install_dir:
     install_dir          => $install_dir,
     install_url          => $install_url,
@@ -119,8 +121,8 @@ define wordpress::instance (
     db_password          => $db_password,
     wp_owner             => $wp_owner,
     wp_group             => $wp_group,
-    wp_config_owner      => $wp_config_owner,
-    wp_config_group      => $wp_config_group,
+    wp_config_owner      => $_wp_config_owner,
+    wp_config_group      => $_wp_config_group,
     wp_config_mode       => $wp_config_mode,
     wp_lang              => $wp_lang,
     wp_config_content    => $wp_config_content,
