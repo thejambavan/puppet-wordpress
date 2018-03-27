@@ -12,7 +12,7 @@ define wordpress::instance::db (
   ## Set up DB using puppetlabs-mysql defined type
   if $create_db {
     mysql_database { "${db_host}/${db_name}":
-      name => $db_name,
+      name    => $db_name,
       charset => 'utf8',
     }
   }

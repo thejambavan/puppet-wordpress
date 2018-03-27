@@ -53,6 +53,8 @@ define wordpress::instance::app (
       "http_proxy=http://${wp_proxy_host}:${wp_proxy_port}",
       "https_proxy=http://${wp_proxy_host}:${wp_proxy_port}",
     ]
+  } else {
+    $exec_environment = []
   }
 
   ## Resource defaults
