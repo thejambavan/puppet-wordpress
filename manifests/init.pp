@@ -55,11 +55,10 @@
 #   Specifies the file permissions of wp-config.php. Default: 0640
 #
 # [*wp_content_owner*]
-#   Specifies the owner of the wordpress wp-content files. Default: root
+#   Specifies the owner of the wordpress wp-content directory. Default: $wp_owner value.
 #
 # [*wp_content_group*]
-#   Specifies the group of the wordpress wp-content files. Default: 0 (*BSD/Darwin
-#   compatible GID)
+#   Specifies the group of the wordpress wp-content directory. Default: $wp_group value.
 #
 # [*wp_content_recurse*]
 #   Specifies whether to recursively manage the permissions on wp-content. Default: true
@@ -120,8 +119,8 @@ class wordpress (
   $wp_config_owner      = undef,
   $wp_config_group      = undef,
   $wp_config_mode       = '0640',
-  $wp_content_owner     = 'root',
-  $wp_content_group     = '0',
+  $wp_content_owner     = undef,
+  $wp_content_group     = undef,
   $wp_content_recurse   = true,
   $wp_lang              = '',
   $wp_config_content    = undef,
@@ -139,6 +138,8 @@ class wordpress (
 ) {
   $_wp_config_owner = pick($wp_config_owner, $wp_owner)
   $_wp_config_group = pick($wp_config_group, $wp_group)
+  $_wp_content_owner = pick($wp_content_owner, $wp_owner)
+  $_wp_content_group = pick($wp_content_group, $wp_group)
   wordpress::instance { $install_dir:
     install_dir          => $install_dir,
     install_url          => $install_url,
@@ -154,8 +155,8 @@ class wordpress (
     wp_config_owner      => $_wp_config_owner,
     wp_config_group      => $_wp_config_group,
     wp_config_mode       => $wp_config_mode,
-    wp_content_owner     => $wp_content_owner,
-    wp_content_group     => $wp_content_group,
+    wp_content_owner     => $_wp_content_owner,
+    wp_content_group     => $_wp_content_group,
     wp_content_recurse   => $wp_content_recurse,
     wp_lang              => $wp_lang,
     wp_config_content    => $wp_config_content,
