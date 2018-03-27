@@ -1,14 +1,11 @@
 define wordpress::instance::db (
-  $create_db,
-  $create_db_user,
-  $db_name,
-  $db_host,
-  $db_user,
-  $db_password,
+  Boolean $create_db,
+  Boolean $create_db_user,
+  String $db_name,
+  String $db_host,
+  String $db_user,
+  String $db_password,
 ) {
-  validate_bool($create_db,$create_db_user)
-  validate_string($db_name,$db_host,$db_user,$db_password)
-
   ## Set up DB using puppetlabs-mysql defined type
   if $create_db {
     mysql_database { "${db_host}/${db_name}":
