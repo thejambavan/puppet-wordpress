@@ -56,6 +56,15 @@ This will set up one or more installations of Wordpress 4.8.1 on Debian and Redh
 * `wp_group`<br />
   Specifies the group of the wordpress files. Default: `0` (\*BSD/Darwin compatible GID)
 
+* `wp_config_owner`<br />
+  Specifies the other of the wordpress wp-config.php.  You must ensure this user exists as this module does not attempt to create it if missing.  Default: `$wp_owner` value.
+
+* `wp_config_group`<br />
+  Specifies the group of the wordpress wp-config.php. Default: `$wp_group` value.
+
+* `wp_config_mode`<br />
+  Specifies the file permissions of wp-config.php. Default: `0640`
+
 * `wp_lang`<br />
   WordPress Localized Language. Default: ''
 
