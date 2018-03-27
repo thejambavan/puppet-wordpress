@@ -54,6 +54,9 @@
 # [*wp_config_mode*]
 #   Specifies the file permissions of wp-config.php. Default: 0640
 #
+# [*manage_wp_content*]
+#   Specifies whether the wp-content directory should be managed. Default: `false`.
+#
 # [*wp_content_owner*]
 #   Specifies the owner of the wordpress wp-content directory. Default: $wp_owner value.
 #
@@ -119,6 +122,7 @@ class wordpress (
   $wp_config_owner      = undef,
   $wp_config_group      = undef,
   $wp_config_mode       = '0640',
+  $manage_wp_content    = false,
   $wp_content_owner     = undef,
   $wp_content_group     = undef,
   $wp_content_recurse   = true,
@@ -155,6 +159,7 @@ class wordpress (
     wp_config_owner      => $_wp_config_owner,
     wp_config_group      => $_wp_config_group,
     wp_config_mode       => $wp_config_mode,
+    manage_wp_content    => $manage_wp_content,
     wp_content_owner     => $_wp_content_owner,
     wp_content_group     => $_wp_content_group,
     wp_content_recurse   => $wp_content_recurse,
