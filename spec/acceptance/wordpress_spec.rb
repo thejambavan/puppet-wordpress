@@ -22,8 +22,8 @@ describe 'setting up a wordpress instance' do
       }
     )
 
-    expect(apply_manifest(pp, catch_failures: true).stderr).to eq('')
-    expect(apply_manifest(pp, catch_changes: true).stderr).to eq('')
+    apply_manifest(pp, catch_failures: true)
+    apply_manifest(pp, catch_changes: true)
 
     expect(shell('/usr/bin/curl wordpress.localdomain:80/blog/wp-admin/install.php').stdout).to match(%r{Install WordPress})
   end
@@ -60,8 +60,8 @@ describe 'setting up a wordpress instance' do
       }
     )
 
-    expect(apply_manifest(pp, catch_failures: true).stderr).to eq('')
-    expect(apply_manifest(pp, catch_changes: true).stderr).to eq('')
+    apply_manifest(pp, catch_failures: true)
+    apply_manifest(pp, catch_changes: true)
 
     expect(shell('/usr/bin/curl wordpress1.localdomain:80/blog/wp-admin/install.php').stdout).to match(%r{Install WordPress})
     expect(shell('/usr/bin/curl wordpress2.localdomain:80/blog/wp-admin/install.php').stdout).to match(%r{Install WordPress})
