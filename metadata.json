@@ -6,9 +6,18 @@
   "license": "Apache-2.0",
   "source": "https://github.com/hunner/puppet-wordpress",
   "dependencies": [
-    {"name":"puppetlabs/concat",    "version_requirement":">= 1.0.0"},
-    {"name":"puppetlabs/mysql",     "version_requirement":">= 2.1.0"},
-    {"name":"puppetlabs/stdlib",    "version_requirement":">= 2.3.1"}
+    {
+      "name": "puppetlabs/concat",
+      "version_requirement": ">= 1.0.0"
+    },
+    {
+      "name": "puppetlabs/mysql",
+      "version_requirement": ">= 2.1.0"
+    },
+    {
+      "name": "puppetlabs/stdlib",
+      "version_requirement": ">= 2.3.1"
+    }
   ],
   "operatingsystem_support": [
     {
@@ -54,8 +63,7 @@
       "version_requirement": ">= 4.7.0 < 6.0.0"
     }
   ],
-  "pdk-version": "1.4.1",
+  "pdk-version": "1.4.1 (heads/add_build_changelog-0-g7fa15ab)",
   "template-url": "https://github.com/puppetlabs/pdk-templates",
-  "template-ref": "1.4.1-0-g52adbbb"
+  "template-ref": "heads/master-0-g046d65e"
 }
-

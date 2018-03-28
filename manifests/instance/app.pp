@@ -1,37 +1,34 @@
 define wordpress::instance::app (
-  $install_dir,
-  $install_url,
-  $version,
-  $db_name,
-  $db_host,
-  $db_user,
-  $db_password,
-  $wp_owner,
-  $wp_group,
-  $wp_config_owner,
-  $wp_config_group,
-  $wp_config_mode,
-  $wp_content_owner,
-  $wp_content_group,
-  $wp_content_recurse,
-  $wp_lang,
-  $wp_config_content,
-  $wp_plugin_dir,
-  $wp_additional_config,
-  $wp_table_prefix,
-  $wp_proxy_host,
-  $wp_proxy_port,
-  $wp_site_url,
-  $wp_multisite,
-  $wp_site_domain,
-  $wp_debug,
-  $wp_debug_log,
-  $wp_debug_display,
+  Stdlib::Absolutepath $install_dir,
+  String $install_url,
+  String $version,
+  String $db_name,
+  String $db_host,
+  String $db_user,
+  String $db_password,
+  String $wp_owner,
+  String $wp_group,
+  String $wp_config_owner,
+  String $wp_config_group,
+  String $wp_config_mode,
+  Boolean $manage_wp_content,
+  String $wp_content_owner,
+  String $wp_content_group,
+  Boolean $wp_content_recurse,
+  String $wp_lang,
+  Optional[String] $wp_config_content,
+  String $wp_plugin_dir,
+  String $wp_additional_config,
+  String $wp_table_prefix,
+  String $wp_proxy_host,
+  String $wp_proxy_port,
+  Optional[String] $wp_site_url,
+  Boolean $wp_multisite,
+  String $wp_site_domain,
+  Boolean $wp_debug,
+  Boolean $wp_debug_log,
+  Boolean $wp_debug_display,
 ) {
-  validate_string($install_dir,$install_url,$version,$db_name,$db_host,$db_user,$db_password,$wp_owner,$wp_group, $wp_config_owner, $wp_config_group, $wp_config_mode, $wp_content_owner, $wp_content_group, $wp_lang, $wp_plugin_dir,$wp_additional_config,$wp_table_prefix,$wp_proxy_host,$wp_proxy_port,$wp_site_domain)
-  validate_bool($wp_content_recurse, $wp_multisite, $wp_debug, $wp_debug_log, $wp_debug_display)
-  validate_absolute_path($install_dir)
-
   if $wp_config_content and ($wp_lang or $wp_debug or $wp_debug_log or $wp_debug_display or $wp_proxy_host or $wp_proxy_port or $wp_multisite or $wp_site_domain) {
     warning('When $wp_config_content is set, the following parameters are ignored: $wp_table_prefix, $wp_lang, $wp_debug, $wp_debug_log, $wp_debug_display, $wp_plugin_dir, $wp_proxy_host, $wp_proxy_port, $wp_multisite, $wp_site_domain, $wp_additional_config')
   }
@@ -53,6 +50,8 @@ define wordpress::instance::app (
       "http_proxy=http://${wp_proxy_host}:${wp_proxy_port}",
       "https_proxy=http://${wp_proxy_host}:${wp_proxy_port}",
     ]
+  } else {
+    $exec_environment = []
   }
 
   ## Resource defaults
@@ -106,12 +105,14 @@ define wordpress::instance::app (
     group       => $wp_group,
   }
 
-  file { "${install_dir}/wp-content":
-    ensure  => directory,
-    owner   => $wp_content_owner,
-    group   => $wp_content_group,
-    recurse => $wp_content_recurse,
-    require => Exec["Extract wordpress ${install_dir}"],
+  if $manage_wp_content {
+    file { "${install_dir}/wp-content":
+      ensure  => directory,
+      owner   => $wp_content_owner,
+      group   => $wp_content_group,
+      recurse => $wp_content_recurse,
+      require => Exec["Extract wordpress ${install_dir}"],
+    }
   }
 
   ## Configure wordpress

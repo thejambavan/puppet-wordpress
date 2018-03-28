@@ -1,8 +1,8 @@
 require 'spec_helper_acceptance'
 
-describe "setting up a wordpress instance" do
+describe 'setting up a wordpress instance' do
   it 'deploys a wordpress instance' do
-    pp = %{
+    pp = %(
       class { 'apache':
         mpm_module => 'prefork',
       }
@@ -20,16 +20,16 @@ describe "setting up a wordpress instance" do
         install_dir => '/opt/wordpress/blog',
         require     => Class['mysql::server'],
       }
-    }
+    )
 
-    expect(apply_manifest(pp, :catch_failures => true).stderr).to eq("")
-    expect(apply_manifest(pp, :catch_changes  => true).stderr).to eq("")
+    apply_manifest(pp, catch_failures: true)
+    apply_manifest(pp, catch_changes: true)
 
-    expect(shell("/usr/bin/curl wordpress.localdomain:80/blog/wp-admin/install.php").stdout).to match(/Install WordPress/)
+    expect(shell('/usr/bin/curl wordpress.localdomain:80/blog/wp-admin/install.php').stdout).to match(%r{Install WordPress})
   end
 
   it 'deploys two wordpress instances' do
-    pp = %{
+    pp = %(
       class { 'apache':
         mpm_module => 'prefork',
       }
@@ -58,41 +58,41 @@ describe "setting up a wordpress instance" do
         db_user => 'wordpress2',
         require => Class['mysql::server'],
       }
-    }
+    )
 
-    expect(apply_manifest(pp, :catch_failures => true).stderr).to eq("")
-    expect(apply_manifest(pp, :catch_changes  => true).stderr).to eq("")
+    apply_manifest(pp, catch_failures: true)
+    apply_manifest(pp, catch_changes: true)
 
-    expect(shell("/usr/bin/curl wordpress1.localdomain:80/blog/wp-admin/install.php").stdout).to match(/Install WordPress/)
-    expect(shell("/usr/bin/curl wordpress2.localdomain:80/blog/wp-admin/install.php").stdout).to match(/Install WordPress/)
+    expect(shell('/usr/bin/curl wordpress1.localdomain:80/blog/wp-admin/install.php').stdout).to match(%r{Install WordPress})
+    expect(shell('/usr/bin/curl wordpress2.localdomain:80/blog/wp-admin/install.php').stdout).to match(%r{Install WordPress})
   end
 
   it 'deploys a wordpress instance as the httpd user with a secure DB password and a specific location' do
-    pp = %{
-      class { 'apache':
-        mpm_module => 'prefork',
-      }
-      class { 'apache::mod::php': }
-      class { 'mysql::server': }
-      class { 'mysql::bindings::php': }
+    # pp = %(
+    #   class { 'apache':
+    #     mpm_module => 'prefork',
+    #   }
+    #   class { 'apache::mod::php': }
+    #   class { 'mysql::server': }
+    #   class { 'mysql::bindings::php': }
 
-      apache::vhost { 'wordpress.localdomain':
-        docroot => '/var/www/wordpress',
-        port    => '80',
-      }
+    #   apache::vhost { 'wordpress.localdomain':
+    #     docroot => '/var/www/wordpress',
+    #     port    => '80',
+    #   }
 
-      class { 'wordpress':
-        install_dir => '/var/www/wordpress/blog',
-        wp_owner    => $apache::user,
-        wp_group    => $apache::group,
-        db_name     => 'wordpress',
-        db_host     => 'localhost',
-        db_user     => 'wordpress',
-        db_password => 'hvyH(S%t(\"0\"16',
-      }
-    }
+    #   class { 'wordpress':
+    #     install_dir => '/var/www/wordpress/blog',
+    #     wp_owner    => $apache::user,
+    #     wp_group    => $apache::group,
+    #     db_name     => 'wordpress',
+    #     db_host     => 'localhost',
+    #     db_user     => 'wordpress',
+    #     db_password => 'hvyH\(S%t\(\"0\"16',
+    #   }
+    # )
 
-    pending
+    # pending
   end
 
   it 'deploys a wordpress instance with a remote DB'
