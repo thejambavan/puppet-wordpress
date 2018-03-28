@@ -50,7 +50,7 @@
 #   Specifies the group of the wordpress wp-config.php. Default: $pw_group value.
 #
 # [*wp_config_mode*]
-#   Specifies the file permissions of wp-config.php. Default: 0640
+#   Specifies the file permissions of wp-config.php. Default: 0644
 #
 # [*manage_wp_content*]
 #   Specifies whether the wp-content directory should be managed. Default: `false`.
@@ -110,7 +110,7 @@ define wordpress::instance (
   $wp_group             = '0',
   $wp_config_owner      = undef,
   $wp_config_group      = undef,
-  $wp_config_mode       = '0640',
+  $wp_config_mode       = '0644',
   $manage_wp_content    = false,
   $wp_content_owner     = undef,
   $wp_content_group     = undef,

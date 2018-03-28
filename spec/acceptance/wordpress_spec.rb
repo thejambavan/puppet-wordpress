@@ -68,31 +68,31 @@ describe 'setting up a wordpress instance' do
   end
 
   it 'deploys a wordpress instance as the httpd user with a secure DB password and a specific location' do
-    pp = %(
-      class { 'apache':
-        mpm_module => 'prefork',
-      }
-      class { 'apache::mod::php': }
-      class { 'mysql::server': }
-      class { 'mysql::bindings::php': }
+    # pp = %(
+    #   class { 'apache':
+    #     mpm_module => 'prefork',
+    #   }
+    #   class { 'apache::mod::php': }
+    #   class { 'mysql::server': }
+    #   class { 'mysql::bindings::php': }
 
-      apache::vhost { 'wordpress.localdomain':
-        docroot => '/var/www/wordpress',
-        port    => '80',
-      }
+    #   apache::vhost { 'wordpress.localdomain':
+    #     docroot => '/var/www/wordpress',
+    #     port    => '80',
+    #   }
 
-      class { 'wordpress':
-        install_dir => '/var/www/wordpress/blog',
-        wp_owner    => $apache::user,
-        wp_group    => $apache::group,
-        db_name     => 'wordpress',
-        db_host     => 'localhost',
-        db_user     => 'wordpress',
-        db_password => 'hvyH\(S%t\(\"0\"16',
-      }
-    )
+    #   class { 'wordpress':
+    #     install_dir => '/var/www/wordpress/blog',
+    #     wp_owner    => $apache::user,
+    #     wp_group    => $apache::group,
+    #     db_name     => 'wordpress',
+    #     db_host     => 'localhost',
+    #     db_user     => 'wordpress',
+    #     db_password => 'hvyH\(S%t\(\"0\"16',
+    #   }
+    # )
 
-    pending pp
+    # pending
   end
 
   it 'deploys a wordpress instance with a remote DB'
