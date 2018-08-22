@@ -104,8 +104,14 @@ This will set up one or more installations of Wordpress 4.8.1 on Debian and Redh
 * `wp_multisite`<br />
   Specifies whether to enable the multisite feature. Requires `wp_site_domain` to also be passed. Default: `false`
 
+* `wp_subdomain_install`<br />
+   Specifies the `SUBDOMAIN_INSTALL` value that will be used when configuring multisite. This states whether blogs created will be blogname.domain.com. Default: `false`
+
 * `wp_site_domain`<br />
   Specifies the `DOMAIN_CURRENT_SITE` value that will be used when configuring multisite. Typically this is the address of the main wordpress instance.  Default: ''
+
+* `wp_path_current_site`<br />
+   Specifies the `PATH_CURRENT_SITE` value that will be used when configuring multisite. If all sites are to be under a url location that is not the toplevel / set this value /path/. wp-admin will then be at /path/wp-admin and additional blogs will be under /path/blogname. Default: '/'
 
 * `wp_debug`<br />
   Specifies the `WP_DEBUG` value that will control debugging. This must be true if you use the next two debug extensions. Default: 'false'

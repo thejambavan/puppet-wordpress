@@ -24,7 +24,9 @@ define wordpress::instance::app (
   String $wp_proxy_port,
   Optional[String] $wp_site_url,
   Boolean $wp_multisite,
+  Boolean $wp_subdomain_install,
   String $wp_site_domain,
+  String $wp_path_current_site,
   Boolean $wp_debug,
   Boolean $wp_debug_log,
   Boolean $wp_debug_display,
@@ -151,7 +153,9 @@ define wordpress::instance::app (
     # - $wp_proxy_port
     # - $wp_site_url
     # - $wp_multisite
+    # - $wp_subdomain_install
     # - $wp_site_domain
+    # - $wp_path_current_site
     # - $wp_additional_config
     # - $wp_debug
     # - $wp_debug_log
