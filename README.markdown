@@ -2,7 +2,7 @@
 
 ## Overview
 
-This will set up one or more installations of Wordpress 3.8 on Debian and Redhat style distributions.
+This will set up one or more installations of Wordpress 4.8.1 on Debian and Redhat style distributions.
 
 ## Capabilities
 
@@ -30,7 +30,7 @@ This will set up one or more installations of Wordpress 3.8 on Debian and Redhat
   Specifies the url from which the wordpress tarball should be downloaded.  Default: `http://wordpress.org`
 
 * `version`<br />
-  Specifies the version of wordpress to install. Default: `3.8`
+  Specifies the version of wordpress to install. Default: `4.8.1`
 
 * `create_db`<br />
   Specifies whether to create the db or not. Default: `true`
@@ -56,6 +56,27 @@ This will set up one or more installations of Wordpress 3.8 on Debian and Redhat
 * `wp_group`<br />
   Specifies the group of the wordpress files. Default: `0` (\*BSD/Darwin compatible GID)
 
+* `wp_config_owner`<br />
+  Specifies the other of the wordpress wp-config.php.  You must ensure this user exists as this module does not attempt to create it if missing.  Default: `$wp_owner` value.
+
+* `wp_config_group`<br />
+  Specifies the group of the wordpress wp-config.php. Default: `$wp_group` value.
+
+* `wp_config_mode`<br />
+  Specifies the file permissions of wp-config.php. Default: `0644`
+
+* `manage_wp_content`<br />
+  Specifies whether the wp-content directory should be managed. Default: `false`.
+
+* `wp_content_owner`<br />
+  Specifies the owner of the wordpress wp-content directory. Default: `$wp_owner` value.
+
+* `wp_content_group`<br />
+  Specifies the group of the wordpress wp-content directory. Default: `$wp_group` value.
+
+* `wp_content_recurse`<br />
+  Specifies whether to recursively manage the permissions on wp-content. Default: `true`
+
 * `wp_lang`<br />
   WordPress Localized Language. Default: ''
 
@@ -76,6 +97,9 @@ This will set up one or more installations of Wordpress 3.8 on Debian and Redhat
 
 * `wp_proxy_port`<br />
   Specifies the port to use with the proxy host.  Default: ''
+
+* `wp_site_url`<br />
+  If your WordPress server is behind a proxy, you might need to set the WP_SITEURL with this parameter.  Default: 'undef'
 
 * `wp_multisite`<br />
   Specifies whether to enable the multisite feature. Requires `wp_site_domain` to also be passed. Default: `false`
