@@ -74,6 +74,9 @@
 # [*wp_additional_config*]
 #   Specifies a template to include near the end of the wp-config.php file to add additional options. Default: ''
 #
+# [*wp_additional_inline_config*]
+#   Specifies a hash of additional configuration options to include near the end of the wp-config.php file. Default: '{}'
+#
 # [*wp_table_prefix*]
 #   Specifies the database table prefix. Default: wp_
 #
@@ -125,6 +128,7 @@ define wordpress::instance (
   $wp_config_content    = undef,
   $wp_plugin_dir        = 'DEFAULT',
   $wp_additional_config = 'DEFAULT',
+  $wp_additional_inline_config  = {},
   $wp_table_prefix      = 'wp_',
   $wp_proxy_host        = '',
   $wp_proxy_port        = '',
@@ -162,6 +166,7 @@ define wordpress::instance (
     wp_config_content    => $wp_config_content,
     wp_plugin_dir        => $wp_plugin_dir,
     wp_additional_config => $wp_additional_config,
+    wp_additional_inline_config => $wp_additional_inline_config,
     wp_table_prefix      => $wp_table_prefix,
     wp_proxy_host        => $wp_proxy_host,
     wp_proxy_port        => $wp_proxy_port,
