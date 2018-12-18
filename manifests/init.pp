@@ -76,6 +76,9 @@
 # [*wp_additional_config*]
 #   Specifies a template to include near the end of the wp-config.php file to add additional options. Default: ''
 #
+# [*wp_additional_inline_config*]
+#   Specifies a hash of additional configuration options to include near the end of the wp-config.php file. Default: '{}'
+#
 # [*wp_table_prefix*]
 #   Specifies the database table prefix. Default: wp_
 #
@@ -91,8 +94,14 @@
 # [*wp_multisite*]
 #   Specifies whether to enable the multisite feature. Requires `wp_site_domain` to also be passed. Default: `false`
 #
+# [*wp_subdomain_install*]
+#   Specifies the `SUBDOMAIN_INSTALL` value that will be used when configuring multisite. This states whether blogs created will be blogname.domain
+#
 # [*wp_site_domain*]
 #   Specifies the `DOMAIN_CURRENT_SITE` value that will be used when configuring multisite. Typically this is the address of the main wordpress instance.  Default: ''
+#
+# [*wp_path_current_site*]
+#   Specifies the `PATH_CURRENT_SITE` value that will be used when configuring multisite. If all sites are to be under a url location that is not t
 #
 # [*wp_debug*]
 #   Specifies the `WP_DEBUG` value that will control debugging. This must be true if you use the next two debug extensions. Default: 'false'
@@ -108,73 +117,79 @@
 # === Examples
 #
 class wordpress (
-  $install_dir          = '/opt/wordpress',
-  $install_url          = 'https://wordpress.org',
-  $version              = '4.8.1',
-  $create_db            = true,
-  $create_db_user       = true,
-  $db_name              = 'wordpress',
-  $db_host              = 'localhost',
-  $db_user              = 'wordpress',
-  $db_password          = 'password',
-  $wp_owner             = 'root',
-  $wp_group             = '0',
-  $wp_config_owner      = undef,
-  $wp_config_group      = undef,
-  $wp_config_mode       = '0644',
-  $manage_wp_content    = false,
-  $wp_content_owner     = undef,
-  $wp_content_group     = undef,
-  $wp_content_recurse   = true,
-  $wp_lang              = '',
-  $wp_config_content    = undef,
-  $wp_plugin_dir        = 'DEFAULT',
-  $wp_additional_config = 'DEFAULT',
-  $wp_table_prefix      = 'wp_',
-  $wp_proxy_host        = '',
-  $wp_proxy_port        = '',
-  $wp_site_url          = undef,
-  $wp_multisite         = false,
-  $wp_site_domain       = '',
-  $wp_debug             = false,
-  $wp_debug_log         = false,
-  $wp_debug_display     = false,
+  $install_dir                 = '/opt/wordpress',
+  $install_url                 = 'https://wordpress.org',
+  $version                     = '4.8.1',
+  $create_db                   = true,
+  $create_db_user              = true,
+  $db_name                     = 'wordpress',
+  $db_host                     = 'localhost',
+  $db_user                     = 'wordpress',
+  $db_password                 = 'password',
+  $wp_owner                    = 'root',
+  $wp_group                    = '0',
+  $wp_config_owner             = undef,
+  $wp_config_group             = undef,
+  $wp_config_mode              = '0644',
+  $manage_wp_content           = false,
+  $wp_content_owner            = undef,
+  $wp_content_group            = undef,
+  $wp_content_recurse          = true,
+  $wp_lang                     = '',
+  $wp_config_content           = undef,
+  $wp_plugin_dir               = 'DEFAULT',
+  $wp_additional_config        = 'DEFAULT',
+  $wp_additional_inline_config = {},
+  $wp_table_prefix             = 'wp_',
+  $wp_proxy_host               = '',
+  $wp_proxy_port               = '',
+  $wp_site_url                 = undef,
+  $wp_multisite                = false,
+  $wp_subdomain_install        = false,
+  $wp_site_domain              = '',
+  $wp_path_current_site        = '/',
+  $wp_debug                    = false,
+  $wp_debug_log                = false,
+  $wp_debug_display            = false,
 ) {
   $_wp_config_owner = pick($wp_config_owner, $wp_owner)
   $_wp_config_group = pick($wp_config_group, $wp_group)
   $_wp_content_owner = pick($wp_content_owner, $wp_owner)
   $_wp_content_group = pick($wp_content_group, $wp_group)
   wordpress::instance { $install_dir:
-    install_dir          => $install_dir,
-    install_url          => $install_url,
-    version              => $version,
-    create_db            => $create_db,
-    create_db_user       => $create_db_user,
-    db_name              => $db_name,
-    db_host              => $db_host,
-    db_user              => $db_user,
-    db_password          => $db_password,
-    wp_owner             => $wp_owner,
-    wp_group             => $wp_group,
-    wp_config_owner      => $_wp_config_owner,
-    wp_config_group      => $_wp_config_group,
-    wp_config_mode       => $wp_config_mode,
-    manage_wp_content    => $manage_wp_content,
-    wp_content_owner     => $_wp_content_owner,
-    wp_content_group     => $_wp_content_group,
-    wp_content_recurse   => $wp_content_recurse,
-    wp_lang              => $wp_lang,
-    wp_config_content    => $wp_config_content,
-    wp_plugin_dir        => $wp_plugin_dir,
-    wp_additional_config => $wp_additional_config,
-    wp_table_prefix      => $wp_table_prefix,
-    wp_proxy_host        => $wp_proxy_host,
-    wp_proxy_port        => $wp_proxy_port,
-    wp_site_url          => $wp_site_url,
-    wp_multisite         => $wp_multisite,
-    wp_site_domain       => $wp_site_domain,
-    wp_debug             => $wp_debug,
-    wp_debug_log         => $wp_debug_log,
-    wp_debug_display     => $wp_debug_display,
+    install_dir                 => $install_dir,
+    install_url                 => $install_url,
+    version                     => $version,
+    create_db                   => $create_db,
+    create_db_user              => $create_db_user,
+    db_name                     => $db_name,
+    db_host                     => $db_host,
+    db_user                     => $db_user,
+    db_password                 => $db_password,
+    wp_owner                    => $wp_owner,
+    wp_group                    => $wp_group,
+    wp_config_owner             => $_wp_config_owner,
+    wp_config_group             => $_wp_config_group,
+    wp_config_mode              => $wp_config_mode,
+    manage_wp_content           => $manage_wp_content,
+    wp_content_owner            => $_wp_content_owner,
+    wp_content_group            => $_wp_content_group,
+    wp_content_recurse          => $wp_content_recurse,
+    wp_lang                     => $wp_lang,
+    wp_config_content           => $wp_config_content,
+    wp_plugin_dir               => $wp_plugin_dir,
+    wp_additional_config        => $wp_additional_config,
+    wp_additional_inline_config => $wp_additional_inline_config,
+    wp_table_prefix             => $wp_table_prefix,
+    wp_proxy_host               => $wp_proxy_host,
+    wp_proxy_port               => $wp_proxy_port,
+    wp_site_url                 => $wp_site_url,
+    wp_multisite                => $wp_multisite,
+    wp_subdomain_install        => $wp_subdomain_install,
+    wp_site_domain              => $wp_site_domain,
+    wp_path_current_site        => $wp_path_current_site,
+    wp_debug                    => $wp_debug,
+    wp_debug_log                => $wp_debug_log,
+    wp_debug_display            => $wp_debug_display,
   }
 }

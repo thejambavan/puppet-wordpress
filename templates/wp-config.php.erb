@@ -93,12 +93,22 @@ define('WP_SITEURL', '<%= @wp_site_url %>');
 /* Multisite */
 define('WP_ALLOW_MULTISITE', true);
 define('MULTISITE', true);
-define('SUBDOMAIN_INSTALL', true);
+define('SUBDOMAIN_INSTALL', <%= @wp_subdomain_install %>);
 define('DOMAIN_CURRENT_SITE', '<%= @wp_site_domain %>');
-define('PATH_CURRENT_SITE', '/');
+define('PATH_CURRENT_SITE', '<%= @wp_path_current_site %>');
 define('SITE_ID_CURRENT_SITE', 1);
 define('BLOG_ID_CURRENT_SITE', 1);
 <% end %>
+
+<%- if ! @wp_additional_inline_config.empty? -%>
+  <%- @wp_additional_inline_config.each do |key, value| -%>
+    <%- if value=='true' or value=='false' or value.class != String -%>
+      define('<%=key%>', <%=value%>);
+    <%- else -%>
+      define('<%=key%>', '<%=value%>');
+    <%- end -%>
+  <%- end -%>
+<%- end -%>
 
 <% if @wp_additional_config != 'DEFAULT' -%>
 <%= scope.function_template([@wp_additional_config]) %>
