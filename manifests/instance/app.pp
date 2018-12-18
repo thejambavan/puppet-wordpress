@@ -35,7 +35,7 @@ define wordpress::instance::app (
 
   if $wp_config_content and ($wp_lang or $wp_debug or $wp_debug_log or $wp_debug_display or $wp_proxy_host or $wp_proxy_port or $wp_multisite or $wp_site_domain or $wp_additional_config or $wp_additional_inline_config) {
      warning('When $wp_config_content is set, the following parameters are ignored: $wp_table_prefix, $wp_lang, $wp_debug, $wp_debug_log, $wp_debug_display, $wp_plugin_dir, $wp_proxy_host, $wp_proxy_port, $wp_multisite, $wp_site_domain, $wp_additional_config, $wp_additional_inline_config')
-
+  }
   if $wp_multisite and ! $wp_site_domain {
     fail('wordpress class requires `wp_site_domain` parameter when `wp_multisite` is true')
   }
